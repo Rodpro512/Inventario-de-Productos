@@ -1,0 +1,83 @@
+use Inventario;
+
+create table Categoria 
+(
+ID_Categoria int primary key identity (1,1),
+Nombre_Categoria varchar (50)
+)
+
+create table Marca
+(
+ID_Marca int primary key identity (1,1),
+Nombre_Marca varchar(50)
+)
+
+create table Producto
+(
+ID_Producto int primary key identity (1,1),
+Nombre varchar (50),
+Codigo int,
+ID_marca int,
+ID_categoria int,
+Cantidad int,
+Descripcion varchar (50),
+Fecha datetime,
+Foto varchar (1000),
+foreign key (ID_marca) references Marca (ID_Marca),
+foreign key (ID_categoria) references Categoria (ID_Categoria)
+)
+
+create table Usuarios
+(
+ID_Usuario int primary key identity (1,1),
+Usuario varchar(50),
+Contraseña varchar (50)
+)
+
+create table Empleados
+(
+ID_Empleado int primary key identity (1,1),
+Nombre varchar (50),
+Apellido varchar (50),
+Teléfono int, 
+Cargo varchar (50), 
+carnet int,
+Dirreccion varchar (1000),  
+ID_usuario int
+foreign key (ID_usuario) references Usuarios (ID_Usuario)
+)
+
+create table Bitacora
+(
+ID_login int primary key identity (1,1),
+ID_usuario int,  
+Fecha datetime, 
+Accion varchar (1000) 
+foreign key (ID_usuario) references Usuarios (ID_Usuario)
+)
+
+create table Movimiento_de_Productos
+(
+ID_Moviento int primary key identity (1,1),
+ID_producto int,
+ID_usuario int,
+Cantidad int, 
+Fecha date,
+Tipo CHAR(1) NOT NULL CHECK (Tipo IN ('I','E'))
+foreign key (ID_producto) references Producto (ID_Producto),
+foreign key (ID_usuario) references Usuarios (ID_Usuario)
+)
+
+insert into Marca (Nombre_Marca) values ('SkullCandy');
+insert into Categoria(Nombre_Categoria) values ('Electronicos');
+insert into Marca (Nombre_Marca) values ('Samsung');
+
+insert into Producto (Nombre,Codigo,ID_marca ,ID_categoria ,Cantidad ,Descripcion,Fecha,Foto) 
+values ('Audifonos',78088,1,1,80,'Audifonos Bluetooth modelo 2025','2025-09-16 10:30:00','Url......');
+insert into Producto (Nombre,Codigo,ID_marca ,ID_categoria ,Cantidad ,Descripcion,Fecha,Foto) 
+values ('Television',70492,2,1,10,'Smart Tv modelo 2025','2025-09-16 10:30:00','Url......');
+
+
+select * from Marca;
+select *from Categoria;
+select * from Producto;
